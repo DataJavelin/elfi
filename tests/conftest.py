@@ -31,7 +31,8 @@ def pytest_addoption(parser):
 """Functional fixtures"""
 
 
-@pytest.fixture(scope="session", params=[native, eipp, mp])
+# TODO: Put eipp in params when ipyparallel is fixed on travis
+@pytest.fixture(scope="session", params=[native, mp])
 def client(request):
     """Provides a fixture for all the different supported clients
     """
