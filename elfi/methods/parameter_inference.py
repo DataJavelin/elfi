@@ -866,7 +866,12 @@ class BayesianOptimization(ParameterInference):
             self.target_model.update(params, precomputed[target_name])
 
         self.batches_per_acquisition = batches_per_acquisition or self.max_parallel_batches
-        self.acquisition_method = acquisition_method or LCBSC(self.target_model,
+        self.acquisition_method = acquisition_method(self.target_model,
+                                                              prior=ModelPrior(self.model),
+                                                              noise_var=acq_noise_var,
+                                                              exploration_rate=exploration_rate,
+                                                              seed=self.seed)\
+                                  or LCBSC(self.target_model,
                                                               prior=ModelPrior(self.model),
                                                               noise_var=acq_noise_var,
                                                               exploration_rate=exploration_rate,
